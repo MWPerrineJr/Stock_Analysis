@@ -38,7 +38,7 @@ print(na_check)
 
 ```
 
-```{r}
+```{r lengths for stocks}
 qbts_length <- length(stock_data[["QBTS"]])
 rgti_length <- length(stock_data[["RGTI"]])
 #uls_length <- length(stock_data[["ULS"]])
@@ -63,9 +63,19 @@ print(cart_length)
 print(hqy_length)
 ```
 ```{r}
-
+head(stock_data[["QBTS"]])
 ```
 
+```{r}
+quantumStockAd <-NULL
+for(ticker in tickers){
+    quantumStockAd <- cbind(quantumStockAd, getSymbols(ticker,
+                                                     src = "yahoo",
+                                                     from = start_date,
+                                                     to = end_date,
+                                                     auto.assign = F)[, 6])
+}
+```
 
 
 
