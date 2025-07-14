@@ -1,0 +1,86 @@
+---
+title: "Quantum Stock Analysis"
+author: "Michael Perrine"
+date: "2025-07-13"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(quantmod)
+library(ggplot2)
+library(tidyverse)
+```
+
+## R Markdown
+
+
+
+```{r upload stock data}
+tickers <- c("QBTS", "RGTI","ULS", "FTAI", "STN", "ALLE", "RTO", "QXO", "ICLR", "CART", "HQY")
+start_date <- "2024-06-01"
+end_date <- "2025-06-30"
+```
+
+```{r}
+stock_data <- list()
+for(ticker in tickers){
+    stock_data[[ticker]] <- getSymbols(ticker, 
+                                        src = "yahoo", 
+                                        from = start_date,
+                                        to = end_date,
+                                        auto.assign = FALSE)}
+```
+
+```{r}
+na_check <- lapply(stock_data, function(x) any(is.na(x)))
+print(na_check)
+
+```
+
+```{r}
+qbts_length <- length(stock_data[["QBTS"]])
+rgti_length <- length(stock_data[["RGTI"]])
+#uls_length <- length(stock_data[["ULS"]])
+ftai_length <- length(stock_data[["FTAI"]])
+stn_length <- length(stock_data[["STN"]])
+alle_length <- length(stock_data[["ALLE"]])
+rto_length <- length(stock_data[["RTO"]])
+oxo_length <- length(stock_data[["QXO"]])
+iclr_length <- length(stock_data[["ICLR"]])
+cart_length <- length(stock_data[["CART"]])
+hqy_length <- length(stock_data[["HQY"]])
+print(qbts_length)
+print(rgti_length)
+#print(uls_length)
+print(ftai_length)
+print(stn_length)
+print(alle_length)
+print(rto_length)
+print(oxo_length)
+print(iclr_length)
+print(cart_length)
+print(hqy_length)
+```
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
