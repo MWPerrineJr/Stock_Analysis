@@ -10,19 +10,23 @@ knitr::opts_chunk$set(echo = TRUE)
 library(quantmod)
 library(ggplot2)
 library(tidyverse)
+library(PerformanceAnalytics)
 ```
 
 ## R Markdown
 
+There has been a surge of investment into technology. The publicity of self driving cars, artificial inteligence, and other advancements are driving the need for higher computing power. There are several firms competing to be the leader in the industry. One of my favorites is D Wave Quantum. Personally I've seen an 892.54%. Will this trend continue and what other gems are out there?
+
+This is an analysis of DWave Quantum"QBTS", Rigetti Computig "RGTI", UL Solutions "ULS", FTAI Aviation "FTAI", Stantec "STN", Allegion "ALLE", 'Rentokil Iitial "RTO", OXO "QXO", Icon "ICLR", Maplebear "CART", and Health Equity "HQY". I will begin bu uploading the stock data. Then I will run technical analysis to determine the value of purchasing more D Wave and potentially another gem in the sector.
 
 
-```{r upload stock data}
+```{r create parameters for stock data}
 tickers <- c("QBTS", "RGTI","ULS", "FTAI", "STN", "ALLE", "RTO", "QXO", "ICLR", "CART", "HQY")
 start_date <- "2024-06-01"
 end_date <- "2025-06-30"
 ```
 
-```{r}
+```{r create list of stock data}
 stock_data <- list()
 for(ticker in tickers){
     stock_data[[ticker]] <- getSymbols(ticker, 
@@ -32,13 +36,13 @@ for(ticker in tickers){
                                         auto.assign = FALSE)}
 ```
 
-```{r}
+```{r Check for null values }
 na_check <- lapply(stock_data, function(x) any(is.na(x)))
 print(na_check)
 
 ```
 
-```{r lengths for stocks}
+```{r lengths for stocks in stocks list}
 qbts_length <- length(stock_data[["QBTS"]])
 rgti_length <- length(stock_data[["RGTI"]])
 #uls_length <- length(stock_data[["ULS"]])
@@ -62,11 +66,11 @@ print(iclr_length)
 print(cart_length)
 print(hqy_length)
 ```
-```{r}
+```{r view QBTS data from stock list}
 head(stock_data[["QBTS"]])
 ```
 
-```{r}
+```{r create dataframe for stocks adjusted close prices}
 quantumStockAd <-NULL
 for(ticker in tickers){
     quantumStockAd <- cbind(quantumStockAd, getSymbols(ticker,
@@ -77,6 +81,14 @@ for(ticker in tickers){
 }
 ```
 
+```{r rename columns}
+colnames(quantumStockAd) <- tickers
+head(quantumStockAd)
+```
+```{r calcualte sharp ratio}
+t_bill_10_yr <- getSymbols("TNX", src = "yahoo", auto.assign = FALSE)
+na.approx(t_bill_10_yr)
+```
 
 
 
