@@ -85,11 +85,19 @@ for(ticker in tickers){
 colnames(quantumStockAd) <- tickers
 head(quantumStockAd)
 ```
-```{r calcualte sharp ratio}
-t_bill_10_yr <- getSymbols("TNX", src = "yahoo", auto.assign = FALSE)
-na.approx(t_bill_10_yr)
+
+
+```{r calculate the risk free rate}
+inflation_rate <- .0267
+t_bill_10_yr <-  .0489
+rf_rate <- (1+t_bill_10_yr)/(1+inflation_rate)-1
+
+
 ```
 
+```{r}
+qbts_sharp <- Return.excess(quantumStockAd["QBTS"], rf=.002)
+```
 
 
 
